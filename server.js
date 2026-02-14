@@ -31,6 +31,7 @@ app.use(
       "https://whackarim.vercel.app",
       "https://lolguesser-backend.onrender.com",
       "https://flinder.netlify.app",
+      "http://localhost:5173",
     ],
     credentials: true,
   }),

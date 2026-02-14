@@ -20,7 +20,7 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = [
+const allowedOrigins = new Set([
   "http://localhost:5500",
   "http://localhost:5173",
   "https://flindr.netlify.app",
@@ -28,21 +28,18 @@ const allowedOrigins = [
   "https://lolgiss.com",
   "https://www.lolgiss.com",
   "https://whackarim.vercel.app",
-];
+]);
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, origin);
-      }
-      return callback(new Error("Not allowed by CORS"));
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true);
+      return cb(null, allowedOrigins.has(origin));
     },
     credentials: true,
   }),
 );
-app.options("*", cors());
+app.options("/*", cors());
 
 app.use(express.json());
 app.use(cookieParser());

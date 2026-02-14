@@ -1,49 +1,62 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
-const championRoutes = require('./routes/champion');
-const guessRoutes = require('./routes/guess');
-const signupRoute = require('./routes/signup');
-const loginRoute = require('./routes/login');
-const profileRoute = require('./routes/profile');
-const logoutRoute = require('./routes/logout');
-const statsRoute = require('./routes/stats');
-const leaderboardRoute = require('./routes/leaderboard');
-const yesterdayRoute = require('./routes/yesterday');
+const championRoutes = require("./routes/champion");
+const guessRoutes = require("./routes/guess");
+const signupRoute = require("./routes/signup");
+const loginRoute = require("./routes/login");
+const profileRoute = require("./routes/profile");
+const logoutRoute = require("./routes/logout");
+const statsRoute = require("./routes/stats");
+const leaderboardRoute = require("./routes/leaderboard");
+const yesterdayRoute = require("./routes/yesterday");
 
-const wamRoute = require('./routes/wam');
+const wamRoute = require("./routes/wam");
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors({
-  origin: ['http://localhost:5500', 'https://lolguesser.netlify.app', 'https://lolgiss.com', 'https://www.lolgiss.com', 'https://api.lolgiss.com', 'https://whackarim.vercel.app', 'https://lolguesser-backend.onrender.com'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5500",
+      "https://lolguesser.netlify.app",
+      "https://lolgiss.com",
+      "https://www.lolgiss.com",
+      "https://api.lolgiss.com",
+      "https://whackarim.vercel.app",
+      "https://lolguesser-backend.onrender.com",
+      "https://flinder.netlify.app",
+    ],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/stats', statsRoute);
-app.use('/api/champion', championRoutes);
-app.use('/api/guess', guessRoutes);
-app.use('/api/signup', signupRoute);
-app.use('/api/login', loginRoute);
-app.use('/api/profile', profileRoute);
-app.use('/api/logout', logoutRoute);
-app.use('/api/leaderboard', leaderboardRoute);
-app.use('/api/yesterday', yesterdayRoute);
-app.use('/api/wam', wamRoute);
+app.use("/api/stats", statsRoute);
+app.use("/api/champion", championRoutes);
+app.use("/api/guess", guessRoutes);
+app.use("/api/signup", signupRoute);
+app.use("/api/login", loginRoute);
+app.use("/api/profile", profileRoute);
+app.use("/api/logout", logoutRoute);
+app.use("/api/leaderboard", leaderboardRoute);
+app.use("/api/yesterday", yesterdayRoute);
+app.use("/api/wam", wamRoute);
+app.use("/api/flinder", require("./routes/flinder"));
 
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log('✅ MongoDB connected');
+    console.log("✅ MongoDB connected");
   })
-  .catch(err => {
-    console.error('❌ MongoDB connection failed:', err);
+  .catch((err) => {
+    console.error("❌ MongoDB connection failed:", err);
   })
   .finally(() => {
     const PORT = process.env.PORT || 3000;

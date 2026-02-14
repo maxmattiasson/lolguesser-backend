@@ -1,7 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const router = express.Router();
-const supabase = require("../../supabaseClient");
 
 dotenv.config();
 
